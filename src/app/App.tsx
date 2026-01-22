@@ -26,6 +26,7 @@ import imgWhitelabel from '@/assets/Contratação Digital White Label.png';
 import imgApi from '@/assets/Integração via API.png';
 import imgHibrida from '@/assets/Contratação Híbrida.png';
 import imgPortal from '@/assets/Portal do Parceiro.png';
+import logoGedisaNova from '@/assets/logo-gedisa-outline.png';
 
 export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -41,6 +42,7 @@ export default function App() {
     email: '',
     solucao: 'Minha Empresa'
   });
+  const [expandedCard, setExpandedCard] = useState<number | null>(null);
   const [emailNewsletter, setEmailNewsletter] = useState('');
   const [loading, setLoading] = useState(false);
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
@@ -218,16 +220,11 @@ export default function App() {
             <div className="flex items-center justify-between">
               {/* Logo */}
               <div className="flex items-center gap-6">
-                <div className="h-[37px] w-[93px]">
-                  <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 93.0003 37.0355">
-                    <g>
-                      <path clipRule="evenodd" d={svgPaths.p233a6a00} fill="white" fillRule="evenodd" />
-                      <path clipRule="evenodd" d={svgPaths.peaeef00} fill="white" fillRule="evenodd" />
-                      <path clipRule="evenodd" d={svgPaths.p1fc9e980} fill="white" fillRule="evenodd" />
-                      <path clipRule="evenodd" d={svgPaths.p159d0b80} fill="white" fillRule="evenodd" />
-                    </g>
-                  </svg>
-                </div>
+                <img 
+                  src={logoGedisaNova} 
+                  alt="Gedisa Logo" 
+                  className="h-[37px] w-auto object-contain"
+                />
 
                 {/* Desktop Menu */}
                 <div className="hidden lg:flex items-center gap-8">
@@ -442,10 +439,22 @@ export default function App() {
               />
             </div>
           </div>
+          <div className="text-center mt-16">
+            <a 
+              href="#" 
+              className="inline-flex items-center gap-2 font-['Manrope'] font-medium text-[#ff5c00] text-lg hover:gap-3 transition-all"
+            >
+              Faça como elas, seja um parceiro Gedisa
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </a>
+          </div>
         </div>
       </section>
 
-      {/* Soluções Section */}
+
+{/* Soluções Section */}
       <section className="py-16 lg:py-24 bg-white">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="font-['Plus_Jakarta_Sans'] font-semibold text-[#080808] text-3xl lg:text-5xl text-center mb-12 lg:mb-24 leading-tight">
@@ -453,8 +462,8 @@ export default function App() {
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Card 1 */}
-            <div className="relative rounded-xl overflow-hidden h-[536px] group cursor-pointer">
+            {/* Card 1 - Transforme energia em oportunidade */}
+            <div className="relative rounded-xl overflow-hidden h-[536px] group">
               <img
                 alt="Transforme energia em oportunidade"
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
@@ -468,20 +477,60 @@ export default function App() {
               <div className="absolute inset-0 bg-[rgba(0,0,0,0.2)]" />
               <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[rgba(0,0,0,0.6)]" />
               
-              <div className="absolute bottom-5 left-5 right-5 flex items-center justify-between gap-3">
-                <h3 className="font-['Plus_Jakarta_Sans'] font-semibold text-white text-3xl leading-tight">
-                  Transforme energia em oportunidade
-                </h3>
-                <a href="#" className="bg-white/40 backdrop-blur-sm rounded-full w-9 h-9 flex items-center justify-center flex-shrink-0 hover:bg-white/60 transition-colors">
-                  <svg className="w-5 h-5" fill="white" viewBox="2 2 30 30">
-                  <path d={svgPaths.p21ae9480} />
-                  </svg>
-                </a>
+              {/* Conteúdo expandido - Parte inferior */}
+              <div className="absolute bottom-5 left-5 right-20">
+                <div className={`transition-all duration-500 ${
+                  expandedCard === 1 ? 'mb-4' : 'mb-0'
+                }`}>
+                  <h3 className="font-['Plus_Jakarta_Sans'] font-semibold text-white text-3xl leading-tight mb-4">
+                    Transforme energia em oportunidade
+                  </h3>
+                  
+                  {/* Texto e botão - Aparecem quando expandido */}
+                  <div className={`transition-all duration-500 overflow-hidden ${
+                    expandedCard === 1 ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                  }`}>
+                    <p className="font-['Manrope'] text-white text-base leading-relaxed mb-4">
+                      Ofereça economia real para seus clientes e fortaleça sua marca ao lado da maior empresa independente de Geração Distribuída do país.
+                    </p>
+                    <a 
+                      href="#" 
+                      className="inline-flex items-center gap-2 font-['Manrope'] font-medium text-white text-base hover:gap-3 transition-all"
+                    >
+                      Explorar mais
+                      <svg className="w-4 h-4" fill="none" stroke="white" strokeWidth="2" viewBox="0 0 24 24">
+                        <path d="M7 17L17 7M17 7H7M17 7v10" />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* Botão - Fixo no canto inferior direito */}
+              <div className="absolute bottom-5 right-5">
+                <button 
+                  onClick={() => setExpandedCard(expandedCard === 1 ? null : 1)}
+                  className={`rounded-full w-12 h-12 flex items-center justify-center flex-shrink-0 transition-colors ${
+                    expandedCard === 1 
+                      ? 'bg-[#ff5c00] hover:bg-[#e55200]' 
+                      : 'bg-white/40 backdrop-blur-sm hover:bg-white/60'
+                  }`}
+                >
+                  {expandedCard === 1 ? (
+                    <svg className="w-6 h-6" fill="none" stroke="white" strokeWidth="3" viewBox="0 0 24 24">
+                      <path d="M5 12h14" />
+                    </svg>
+                  ) : (
+                    <svg className="w-5 h-5" fill="white" viewBox="2 2 30 30">
+                      <path d={svgPaths.p21ae9480} />
+                    </svg>
+                  )}
+                </button>
               </div>
             </div>
 
-            {/* Card 2 */}
-            <div className="relative rounded-xl overflow-hidden h-[536px] group cursor-pointer">
+            {/* Card 2 - Amplie seu portfólio de energia */}
+            <div className="relative rounded-xl overflow-hidden h-[536px] group">
               <img
                 alt="Amplie seu portfólio de energia"
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
@@ -490,20 +539,60 @@ export default function App() {
               <div className="absolute inset-0 bg-[rgba(0,0,0,0.2)]" />
               <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[rgba(0,0,0,0.6)]" />
               
-              <div className="absolute bottom-5 left-5 right-5 flex items-center justify-between gap-3">
-                <h3 className="font-['Plus_Jakarta_Sans'] font-semibold text-white text-3xl leading-tight">
-                  Amplie seu portfólio de energia
-                </h3>
-                <a href="#" className="bg-white/40 backdrop-blur-sm rounded-full w-9 h-9 flex items-center justify-center flex-shrink-0 hover:bg-white/60 transition-colors">
-                  <svg className="w-5 h-5" fill="white" viewBox="2 2 30 30">
-                    <path d={svgPaths.p21ae9480} />
-                  </svg>
-                </a>  
+              {/* Conteúdo expandido - Parte inferior */}
+              <div className="absolute bottom-5 left-5 right-20">
+                <div className={`transition-all duration-500 ${
+                  expandedCard === 2 ? 'mb-4' : 'mb-0'
+                }`}>
+                  <h3 className="font-['Plus_Jakarta_Sans'] font-semibold text-white text-3xl leading-tight mb-4">
+                    Amplie seu portfólio de energia
+                  </h3>
+                  
+                  {/* Texto e botão - Aparecem quando expandido */}
+                  <div className={`transition-all duration-500 overflow-hidden ${
+                    expandedCard === 2 ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                  }`}>
+                    <p className="font-['Manrope'] text-white text-base leading-relaxed mb-4">
+                      Posicione sua comercializadora em um dos mercados de energia que mais cresce no Brasil.
+                    </p>
+                    <a 
+                      href="#" 
+                      className="inline-flex items-center gap-2 font-['Manrope'] font-medium text-white text-base hover:gap-3 transition-all"
+                    >
+                      Explorar mais
+                      <svg className="w-4 h-4" fill="none" stroke="white" strokeWidth="2" viewBox="0 0 24 24">
+                        <path d="M7 17L17 7M17 7H7M17 7v10" />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* Botão - Fixo no canto inferior direito */}
+              <div className="absolute bottom-5 right-5">
+                <button 
+                  onClick={() => setExpandedCard(expandedCard === 2 ? null : 2)}
+                  className={`rounded-full w-12 h-12 flex items-center justify-center flex-shrink-0 transition-colors ${
+                    expandedCard === 2 
+                      ? 'bg-[#ff5c00] hover:bg-[#e55200]' 
+                      : 'bg-white/40 backdrop-blur-sm hover:bg-white/60'
+                  }`}
+                >
+                  {expandedCard === 2 ? (
+                    <svg className="w-6 h-6" fill="none" stroke="white" strokeWidth="3" viewBox="0 0 24 24">
+                      <path d="M5 12h14" />
+                    </svg>
+                  ) : (
+                    <svg className="w-5 h-5" fill="white" viewBox="2 2 30 30">
+                      <path d={svgPaths.p21ae9480} />
+                    </svg>
+                  )}
+                </button>
               </div>
             </div>
 
-            {/* Card 3 */}
-            <div className="relative rounded-xl overflow-hidden h-[536px] group cursor-pointer">
+            {/* Card 3 - Proteja sua tarifa de energia */}
+            <div className="relative rounded-xl overflow-hidden h-[536px] group">
               <img
                 alt="Proteja sua tarifa de energia"
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
@@ -512,20 +601,60 @@ export default function App() {
               <div className="absolute inset-0 bg-[rgba(0,0,0,0.2)]" />
               <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[rgba(0,0,0,0.6)]" />
               
-              <div className="absolute bottom-5 left-5 right-5 flex items-center justify-between gap-3">
-                <h3 className="font-['Plus_Jakarta_Sans'] font-semibold text-white text-3xl leading-tight">
-                  Proteja sua tarifa de energia
-                </h3>
-                <a href="#" className="bg-white/40 backdrop-blur-sm rounded-full w-9 h-9 flex items-center justify-center flex-shrink-0 hover:bg-white/60 transition-colors">
-                  <svg className="w-5 h-5" fill="white" viewBox="2 2 30 30">
-                    <path d={svgPaths.p21ae9480} />
-                  </svg>
-                </a>
+              {/* Conteúdo expandido - Parte inferior */}
+              <div className="absolute bottom-5 left-5 right-20">
+                <div className={`transition-all duration-500 ${
+                  expandedCard === 3 ? 'mb-4' : 'mb-0'
+                }`}>
+                  <h3 className="font-['Plus_Jakarta_Sans'] font-semibold text-white text-3xl leading-tight mb-4">
+                    Proteja sua tarifa de energia
+                  </h3>
+                  
+                  {/* Texto e botão - Aparecem quando expandido */}
+                  <div className={`transition-all duration-500 overflow-hidden ${
+                    expandedCard === 3 ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                  }`}>
+                    <p className="font-['Manrope'] text-white text-base leading-relaxed mb-4">
+                      Fique livre das variações das bandeiras tarifárias. Economia garantida e sustentabilidade para sua residência ou seu negócio.
+                    </p>
+                    <a 
+                      href="#" 
+                      className="inline-flex items-center gap-2 font-['Manrope'] font-medium text-white text-base hover:gap-3 transition-all"
+                    >
+                      Explorar mais
+                      <svg className="w-4 h-4" fill="none" stroke="white" strokeWidth="2" viewBox="0 0 24 24">
+                        <path d="M7 17L17 7M17 7H7M17 7v10" />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* Botão - Fixo no canto inferior direito */}
+              <div className="absolute bottom-5 right-5">
+                <button 
+                  onClick={() => setExpandedCard(expandedCard === 3 ? null : 3)}
+                  className={`rounded-full w-12 h-12 flex items-center justify-center flex-shrink-0 transition-colors ${
+                    expandedCard === 3 
+                      ? 'bg-[#ff5c00] hover:bg-[#e55200]' 
+                      : 'bg-white/40 backdrop-blur-sm hover:bg-white/60'
+                  }`}
+                >
+                  {expandedCard === 3 ? (
+                    <svg className="w-6 h-6" fill="none" stroke="white" strokeWidth="3" viewBox="0 0 24 24">
+                      <path d="M5 12h14" />
+                    </svg>
+                  ) : (
+                    <svg className="w-5 h-5" fill="white" viewBox="2 2 30 30">
+                      <path d={svgPaths.p21ae9480} />
+                    </svg>
+                  )}
+                </button>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </section>n
 
       {/* Technology Section */}
       <section className="py-16 lg:py-24 bg-[#f8f5f3]">
@@ -881,6 +1010,22 @@ export default function App() {
               </div>
             </div>
           </div>
+
+<div className="mt-12 pt-8 border-t border-[#D0C5BF]">
+                <a 
+                  href="#" 
+                  className="inline-flex items-center gap-2 font-['Manrope'] font-semibold text-[#ff5c00] text-lg hover:gap-3 transition-all group"
+                >
+                  Conheça nossas soluções para parceiros
+                  <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path d="M7 17L17 7M17 7H7M17 7v10" />
+                  </svg>
+                </a>
+                <p className="font-['Manrope'] text-[#5a5a5a] text-sm mt-2">
+                  Clique aqui e descubra como transformar energia em oportunidade de negócio.
+                </p>
+              </div>
+
         </div>
       </section>
 
@@ -1041,7 +1186,23 @@ export default function App() {
               </div>
             </div>
           </div>
+<div className="mt-16 text-center">
+            <a 
+              href="#" 
+              className="inline-flex items-center gap-2 font-['Manrope'] font-semibold text-[#ff5c00] text-lg hover:gap-3 transition-all group"
+            >
+              Saiba como sua comercializadora pode crescer com GD
+              <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path d="M7 17L17 7M17 7H7M17 7v10" />
+              </svg>
+            </a>
+            <p className="font-['Manrope'] text-[#5a5a5a] text-sm mt-2">
+              Entre em contato e descubra as vantagens exclusivas para comercializadoras.
+            </p>
+          </div>
         </div>
+        
+
       </section>
 
       {/* Features Section */}
@@ -1404,23 +1565,11 @@ export default function App() {
             {/* Left - Logo and Newsletter */}
             <div className="space-y-24 lg:space-y-[103px]">
               {/* Logo */}
-              <div className="h-24 w-[219px]">
-                <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 219 96">
-                  <g clipPath="url(#clip0_footer)">
-                    <path clipRule="evenodd" d={svgPaths.pd1bb070} fill="white" fillRule="evenodd" />
-                    <path clipRule="evenodd" d={svgPaths.p39b4e740} fill="white" fillRule="evenodd" />
-                    <g>
-                      <path clipRule="evenodd" d={svgPaths.p3a9df500} fill="white" fillRule="evenodd" />
-                      <path clipRule="evenodd" d={svgPaths.p759c100} fill="white" fillRule="evenodd" />
-                    </g>
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_footer">
-                      <rect fill="white" height="96" width="219" />
-                    </clipPath>
-                  </defs>
-                </svg>
-              </div>
+              <img 
+                src={logoGedisaNova} 
+                alt="Gedisa Logo" 
+                className="h-24 w-auto object-contain"
+              />
 
               {/* Newsletter */}
               <div className="max-w-[472px] space-y-6">
